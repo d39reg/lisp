@@ -4,6 +4,10 @@ function evalLisp(code)
 	var i = 0;
 	var global = {};
 	var local = global;
+	function chkWhite(s)
+	{
+		return s == ' ' || s == "\t" || s == "\r" || s == "\n";
+	}
 	function stdcall(name, args)
 	{
 		var l = args.length, i = 0;
@@ -36,7 +40,7 @@ function evalLisp(code)
 				while(i < l) document.write(args[i++]);
 			break;
 			case 'title':
-				ret = args[0];i++;
+				ret = args[0]; i++;
 				while(i < l) ret += args[i++];
 				document.title = ret;
 			break;
@@ -70,14 +74,14 @@ function evalLisp(code)
 		var tmp = '';
 		var args = [];
 
-		while(i<code.length)
+		while(i < code.length)
 		{
 			s = code.charAt(i++);
-			while(s == ' ') s = code.charAt(i++);
+			while(chkWhite(s)) s = code.charAt(i++);
 			if(s == ')') break;
 			if(!argc)
 			{
-				while(s != ' ' && s != ')' && i < code.length)
+				while(!chkWhite(s) && s != ')' && i < code.length)
 				{
 					name += s;
 					s = code.charAt(i++);
@@ -93,10 +97,10 @@ function evalLisp(code)
 					tmp = e();
 					local = o;
 				}
-				else if(s>='0' && s<='9')
+				else if(s >= '0' && s <= '9')
 				{
 					tmp = '';
-					while(s>='0' && s<='9')
+					while(s >= '0' && s <= '9')
 					{
 						tmp += s;
 						s = code.charAt(i++);
@@ -117,7 +121,7 @@ function evalLisp(code)
 				else
 				{
 					tmp = '';
-					while(s != ' ' && s != ')' && i < code.length)
+					while(!chkWhite(s) && s != ')' && i < code.length)
 					{
 						tmp += s;
 						s = code.charAt(i++);
@@ -134,7 +138,7 @@ function evalLisp(code)
 	}
 	while(i<code.length)
 	{
-		while(code.charAt(i++) == ' ');
+		while(chkWhite(code.charAt(i++)));
 		if(code.charAt(i-1) != '(') return;
 		local = global;
 		e();
