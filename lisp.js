@@ -145,8 +145,8 @@ function evalLisp(code)
 		if(code.charAt(i-1) != ')') return;
 	}
 }
-window.onload = function()
+/*window.onload = function()
 {
 	evalLisp('(set x 123)(print (+ (get x) 4))');
-}
+}*/
 
