@@ -111,7 +111,7 @@
 					else
 					{
 						$tmp = '';
-						while(!chkWhite($s) && $s != ')' && $this->i < strlen($this->code))
+						while(!$this->chkWhite($s) && $s != ')' && $this->i < strlen($this->code))
 						{
 							$tmp .= $s;
 							$s = $this->code[$this->i++];
