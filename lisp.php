@@ -102,7 +102,7 @@
 					{
 						$s = $this->code[$this->i++];
 						$tmp = '';
-						while($s != '"' && $i < strlen($this->code))
+						while($s != '"' && $this->i < strlen($this->code))
 						{
 							$tmp .= $s;
 							$s = $this->code[$this->i++];
