@@ -1,5 +1,5 @@
 
-function evalLisp(code)
+function evalLisp(code, argumentList)
 {
 	var i = 0;
 	var global = {};
@@ -66,7 +66,7 @@ function evalLisp(code)
 		}
 	}
 
-	function e()
+	function e(argumentList)
 	{
 		var argc = 0;
 		var s = '';
@@ -94,8 +94,20 @@ function evalLisp(code)
 				{
 					var o = global;
 					local = [];
-					tmp = e();
+					tmp = e(argumentList);
 					local = o;
+				}
+				else if(s == '@')
+				{
+					tmp = '';
+					s = code.charAt(i++);
+					while(s >= '0' && s <= '9')
+					{
+						tmp += s;
+						s = code.charAt(i++);
+					}
+					tmp = argumentList[parseInt(tmp)];
+					--i;
 				}
 				else if(s >= '0' && s <= '9')
 				{
@@ -141,12 +153,12 @@ function evalLisp(code)
 		while(chkWhite(code.charAt(i++)));
 		if(code.charAt(i-1) != '(') return;
 		local = global;
-		e();
+		e(argumentList);
 		if(code.charAt(i-1) != ')') return;
 	}
 }
 /*window.onload = function()
 {
-	evalLisp('(set x 123)(print (+ (get x) 4))');
+	evalLisp('(set x 123)(print (+ (get x) 4))',[]);
 }*/
 
