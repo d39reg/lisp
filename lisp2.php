@@ -58,7 +58,7 @@
 			elseif (gettype($ast) == 'integer')
 			{
 				return $ast;
-			}
+			} 
 			elseif (gettype($ast) == 'array')
 			{
 				if (!count($ast)) return 0;
